@@ -104,6 +104,7 @@ public class XKNpcMoveCtrl : MonoBehaviour {
 
 	void Update()
 	{
+		//CheckNpcFireAtionByRun();
 		CheckNpcIsRemove();
 		if (!XkGameCtrl.IsActivePlayerOne && !XkGameCtrl.IsActivePlayerTwo) {
 			if (!XkGameCtrl.IsMoveOnPlayerDeath) {
@@ -471,7 +472,6 @@ public class XKNpcMoveCtrl : MonoBehaviour {
 		                                  "orienttopath", true,
 		                                  "easeType", iTween.EaseType.linear,
 		                                  "oncomplete", "OnCompelteMakeNpcMoveFirePoint"));
-
 		IndexFirePointGroup++;
 		SetFirePointScript();
 	}
@@ -535,7 +535,9 @@ public class XKNpcMoveCtrl : MonoBehaviour {
 
 		AnimatorCom = RealNpcTran.GetComponent<Animator>();
 		if (!IsAniMove) {
-			AnimatorCom.enabled = true;
+			if (AnimatorCom != null && AnimatorCom.runtimeAnimatorController != null) {
+				AnimatorCom.enabled = true;
+			}
 		}
 		BoxCollider boxCol = NpcObj.GetComponent<BoxCollider>();
 		if (boxCol == null) {
@@ -590,7 +592,10 @@ public class XKNpcMoveCtrl : MonoBehaviour {
 			if (AnimatorCom == null) {
 				AnimatorCom = RealNpcTran.GetComponent<Animator>();
 			}
-			AnimatorCom.enabled = true;
+
+			if (AnimatorCom != null && AnimatorCom.runtimeAnimatorController != null) {
+				AnimatorCom.enabled = true;
+			}
 			RealNpcTran.gameObject.SetActive(true);
 
 			XKNpcHealthCtrl healthScript = AnimatorCom.GetComponent<XKNpcHealthCtrl>();
@@ -664,7 +669,7 @@ public class XKNpcMoveCtrl : MonoBehaviour {
 			AnimatorCom = RealNpcTran.GetComponent<Animator>();
 		}
 
-		if (AnimatorCom != null) {
+		if (AnimatorCom != null && AnimatorCom.runtimeAnimatorController != null) {
 			AnimatorCom.enabled = true;
 		}
 
@@ -1116,6 +1121,29 @@ public class XKNpcMoveCtrl : MonoBehaviour {
 		RandomPlayFireAction(NpcAniScript);
 		DelayPlayFireAction();
 		NpcAniScript.SetCountHuanDan(CountHuanDan);
+
+//		iTween testITween = GetComponent<iTween>();
+//		if (testITween != null && testITween.isRunning) {
+//			Debug.LogError ("npc action error! isfangzhenNpc "+IsFangZhenNpc);
+//			GameObject objTest = null;
+//			objTest.name = "111";
+//		}
+	}
+
+	void CheckNpcFireAtionByRun()
+	{
+		if (Time.frameCount % 3 != 0) {
+			return;
+		}
+
+		iTween testITween = GetComponent<iTween>();
+		if (testITween != null && testITween.isRunning) {
+			if (NpcAniScript.CheckIsDoFireAction ()) {
+				Debug.LogError ("***npc action error! isfangzhenNpc " + IsFangZhenNpc);
+				GameObject objTest = null;
+				objTest.name = "111";
+			}
+		}
 	}
 
 	public void SetIsDoFireAnimation(bool isDoFire)
@@ -1811,6 +1839,7 @@ public class XKNpcMoveCtrl : MonoBehaviour {
 
 		IndexFirePointGroup = 0;
 		MarkCount = 0;
+		FireDistance = 0f;
 
 		XkNpcZaiTiCtrl zaiTiScript = GetComponentInChildren<XkNpcZaiTiCtrl>();
 		if (zaiTiScript != null && zaiTiScript.ZaiTiNpcBuWaWa != null) {
@@ -1884,7 +1913,7 @@ public class XKNpcMoveCtrl : MonoBehaviour {
 			if (boxCol == null || !boxCol.enabled) {
 				return;
 			}
-			NpcAniScript.ResetNpcAnimation();
+			NpcAniScript.ResetNpcAnimation(1);
 		}
 	}
 }

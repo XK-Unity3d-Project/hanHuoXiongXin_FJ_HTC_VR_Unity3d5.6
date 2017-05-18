@@ -21,12 +21,14 @@ public class XKNpcAnimatorCtrl : MonoBehaviour {
 	int CountFireRun = 5;
 	bool IsAimFeiJiPlayer;
 	GameObject AmmoLiZiObj;
+	RuntimeAnimatorController NpcRunAniCtrl;
 	// Use this for initialization
 	void Awake()
 	{
 		InitNpcAmmoList();
 		CountHuanDan = Random.Range(3, 8);
 		AnimatorCom = GetComponent<Animator>();
+		NpcRunAniCtrl = AnimatorCom.runtimeAnimatorController;
 		NpcScript = GetComponentInParent<XKNpcMoveCtrl>();
 	}
 
@@ -65,6 +67,14 @@ public class XKNpcAnimatorCtrl : MonoBehaviour {
 			return;
 		}
 
+		if (AnimatorCom != null && IsResetNpcAni) {
+			IsResetNpcAni = false;
+			AnimatorCom.runtimeAnimatorController = null;
+			if (NpcRunAniCtrl != null && AnimatorCom.runtimeAnimatorController == null) {
+				AnimatorCom.runtimeAnimatorController = NpcRunAniCtrl;
+			}
+		}
+
 		if (AnimatorCom == null || AnimatorCom.runtimeAnimatorController == null) {
 			//Debug.LogWarning("AnimatorCom or runtimeAnimatorController is null, name "+gameObject.name);
 			return;
@@ -76,6 +86,11 @@ public class XKNpcAnimatorCtrl : MonoBehaviour {
 
 		if (!AnimatorCom.enabled) {
 			AnimatorCom.enabled = true;
+		}
+
+		if (CheckIsDoFireAction () && (aniName == "Run1" || aniName == "Run2")) {
+			aniName = "Run3";
+			//Debug.Log("fix run action...");
 		}
 
 		bool isHuanDan = aniName.StartsWith("HuanDan");
@@ -91,8 +106,17 @@ public class XKNpcAnimatorCtrl : MonoBehaviour {
 		IsDoRunFireAction = false;
 	}
 
-	public void ResetNpcAnimation()
+	bool IsResetNpcAni;
+	public void ResetNpcAnimation(int key = 0)
 	{
+		if (key != 0) {
+			if (AnimatorCom != null) {
+				//AnimatorCom.runtimeAnimatorController = null;
+				IsResetNpcAni = true;
+			}
+			//return;
+		}
+
 		if (!gameObject.activeSelf) {
 			return;
 		}
@@ -467,5 +491,23 @@ public class XKNpcAnimatorCtrl : MonoBehaviour {
 	GameObject SpawnNpcAmmo(Transform spawnPoint)
 	{
 		return (GameObject)Instantiate(AmmoPrefab, spawnPoint.position, spawnPoint.rotation);
+	}
+
+	public bool CheckIsDoFireAction()
+	{
+		if (AnimatorCom.runtimeAnimatorController == null) {
+			return false;
+		}
+
+		if (   AnimatorCom.GetBool("Fire1") 
+			|| AnimatorCom.GetBool("Fire2")
+			|| AnimatorCom.GetBool("Fire3")
+			|| AnimatorCom.GetBool("Fire4")
+			|| AnimatorCom.GetBool("Fire5")
+			|| AnimatorCom.GetBool("Fire6")
+		) {
+			return true;
+		}
+		return false;
 	}
 }

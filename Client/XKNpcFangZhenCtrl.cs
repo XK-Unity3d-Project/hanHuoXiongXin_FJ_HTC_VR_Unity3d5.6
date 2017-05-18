@@ -378,6 +378,10 @@ public class XKNpcFangZhenCtrl : MonoBehaviour {
 
 	void MoveNpcOnCompelteITween()
 	{
+		if (IsMoveToFirePoint) {
+			return;
+		}
+
 		if (MarkCount >= NpcPathTran.childCount) {
 			IsMoveEndPoint = true;
 			if (NpcPathScript != null && NpcPathScript.IsMoveEndFire) {

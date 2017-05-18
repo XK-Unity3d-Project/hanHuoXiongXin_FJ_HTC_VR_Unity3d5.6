@@ -67,7 +67,7 @@ public class XkGameCtrl : MonoBehaviour {
 	 */
 	[Range(1, 1000)] public int LJSRTKYouLiangDianMin = 50;
 	int YouLiangDianVal;
-	[Range(1, 99)] public int DaoDanNum = 50;
+	[Range(1, 99999)] public int DaoDanNum = 50;
 	public GameObject FeiJiPlayer;
 	public AiMark FeiJiPlayerMark;
 	Transform FeiJiPlayerTran;
@@ -619,7 +619,7 @@ public class XkGameCtrl : MonoBehaviour {
 		if (!pcvr.bIsHardWare) {
 			if (IsCartoonShootTest) {
 				if (Input.GetKeyUp(KeyCode.N)) {
-					if (!XkGameCtrl.IsGameOnQuit && (SceneManager.GetActiveScene().buildIndex+1) < Application.levelCount) {
+					if (!XkGameCtrl.IsGameOnQuit && (SceneManager.GetActiveScene().buildIndex+1) < SceneManager.sceneCountInBuildSettings) {
 						System.GC.Collect();
 						SceneManager.LoadScene((SceneManager.GetActiveScene().buildIndex+1));
 					}
@@ -946,6 +946,10 @@ public class XkGameCtrl : MonoBehaviour {
 
 	public void AddDaoDanNum(PlayerEnum playerSt)
 	{
+		if (IsOpenVR) {
+			return;
+		}
+
 		switch(playerSt) {
 		case PlayerEnum.PlayerOne:
 			DaoDanNumPOne += DaoDanBuJiNum;
@@ -1058,11 +1062,17 @@ public class XkGameCtrl : MonoBehaviour {
 
 	public void SubDaoDanNumPOne()
 	{
+		if (IsOpenVR) {
+			return;
+		}
 		DaoDanNumPOne--;
 	}
 	
 	public void SubDaoDanNumPTwo()
 	{
+		if (IsOpenVR) {
+			return;
+		}
 		DaoDanNumPTwo--;
 	}
 
