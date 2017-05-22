@@ -98,8 +98,8 @@ public class XkGameCtrl : MonoBehaviour {
 	static List<YouLiangDianMoveCtrl> YLDLvA = new List<YouLiangDianMoveCtrl>(20);
 	static List<YouLiangDianMoveCtrl> YLDLvB = new List<YouLiangDianMoveCtrl>(20);
 	static List<YouLiangDianMoveCtrl> YLDLvC = new List<YouLiangDianMoveCtrl>(20);
-	public static float ScreenWidth = 1920f;
-	public static float ScreenHeight = 1080f;
+	public static float ScreenWidth = 1360f;
+	public static float ScreenHeight = 768f;
 	public static string TerrainLayer = "Terrain";
 	public int[] ShiBingXunZhangJB = {10, 20};
 	public int[] TanKeXunZhangJB = {10, 20};

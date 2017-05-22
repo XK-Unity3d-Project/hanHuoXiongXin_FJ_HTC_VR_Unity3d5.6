@@ -66,15 +66,15 @@ public class GameMovieCtrl : MonoBehaviour {
 		
 		if (CountMovie == 0) {
 			if (!IsOpenVR) {
-				GlassesCamObj.SetActive(false);
+//				GlassesCamObj.SetActive(false);
 			}
 			else {
 				MovieUICtrlObj.SetActive(false);
 			}
 		}
-		else {
-			GlassesCamObj.SetActive(false);
-		}
+//		else {
+//			GlassesCamObj.SetActive(false);
+//		}
 
 		if (CountMovie == 0 && !IsTestXiaoScreen && IsOpenVR) {
 			ChangeWindowPos();
@@ -112,7 +112,7 @@ public class GameMovieCtrl : MonoBehaviour {
 		Cursor.visible = pcvr.bIsHardWare;
 		LoadingGameCtrl.ResetLoadingInfo();
 		Time.timeScale = 1.0f;
-		CheckClientPortMovieInfo(1);
+		//CheckClientPortMovieInfo(1);
 		AudioManager.Instance.SetParentTran(null);
 		GameOverCtrl.IsShowGameOver = false;
 
@@ -136,11 +136,11 @@ public class GameMovieCtrl : MonoBehaviour {
 	}
 
 	static int CountMovie;
-	public GameObject GlassesCamObj;
+//	public GameObject GlassesCamObj;
 	public GameObject MovieUICtrlObj;
 	void DelayPlayMovie()
 	{
-		GlassesCamObj.SetActive(false);
+//		GlassesCamObj.SetActive(false);
 		MovieUICtrlObj.SetActive(true);
 		PlayMovie();
 	}
@@ -318,7 +318,7 @@ public class GameMovieCtrl : MonoBehaviour {
 		if (IsStopMovie) {
 			return;
 		}
-		CheckClientPortMovieInfo();
+		//CheckClientPortMovieInfo();
 		GUI.DrawTexture(RectMv, Movie, ScaleMode.StretchToFill);
 
 		TimeVal += Time.deltaTime;
