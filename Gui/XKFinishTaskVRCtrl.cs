@@ -4,7 +4,7 @@ using System.Collections;
 public class XKFinishTaskVRCtrl : MonoBehaviour
 {
 	public GameObject VRUIRootObj;
-	public GameObject VRCameraObj;
+//	public GameObject VRCameraObj;
 	static XKFinishTaskVRCtrl _Instance;
 	public static XKFinishTaskVRCtrl GetInstance()
 	{
@@ -25,6 +25,9 @@ public class XKFinishTaskVRCtrl : MonoBehaviour
 		if (XKPlayerGunRotCtrl.GetInstanceTwo() != null) {
 			XKPlayerGunRotCtrl.GetInstanceTwo().gameObject.SetActive(false);
 		}
+		if (XkPlayerCtrl.GetInstanceFeiJi() != null) {
+			XkPlayerCtrl.GetInstanceFeiJi().PlayerHiddenArray[0].SetActive(false);
+		}
 		TweenAlpha twAlpha = gameObject.AddComponent<TweenAlpha>();
 		twAlpha.enabled = false;
 		twAlpha.from = 0f;
@@ -40,7 +43,7 @@ public class XKFinishTaskVRCtrl : MonoBehaviour
 
 	void OnFinishTaskAlphaToEnd()
 	{
-		VRCameraObj.SetActive(false);
+//		VRCameraObj.SetActive(false);
 		//loading movie scene.
 		XkGameCtrl.LoadingGameMovie();
 	}
