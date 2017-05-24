@@ -32,9 +32,11 @@ public class PlayerAmmoCtrl : MonoBehaviour {
 	{
 		if (TrailScript == null) {
 			TrailScript = GetComponentInChildren<TrailRenderer>();
-			TrailScript.castShadows = false;
-			TrailScript.receiveShadows = false;
-			TrailTime = TrailScript.time;
+			if (TrailScript != null) {
+				TrailScript.castShadows = false;
+				TrailScript.receiveShadows = false;
+				TrailTime = TrailScript.time;
+			}
 		}
 		AmmoTran = transform;
 		ObjAmmo = gameObject;
