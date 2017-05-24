@@ -49,7 +49,7 @@ public class AudioListCtrl : MonoBehaviour {
 		_Instance = this;
 		XkGameCtrl.SetParentTran(transform, AudioManager.Instance.transform);
 		ResetGameAudioSource();
-		DontDestroyOnLoad(gameObject);
+		//DontDestroyOnLoad(gameObject);
 	}
 	
 	public static void StopLoopAudio(AudioSource asVal, int key = 0)
