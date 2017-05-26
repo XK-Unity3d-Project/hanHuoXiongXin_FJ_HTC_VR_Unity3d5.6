@@ -10,9 +10,11 @@ public class XKPlayerFireAudioCtrl : MonoBehaviour
 	public AudioSource[] AudioRotDown;
 	//转管起步音效.
 	public AudioSource[] AudioRotUp;
+	XKPlayerAutoFire PlayerAutoFireCom;
 	// Use this for initialization
 	void Start ()
 	{
+		PlayerAutoFireCom = GetComponent<XKPlayerAutoFire>();
 		for (int i = 0; i < AudioRot.Length; i++) {
 			AudioRot[i].loop = true;
 		}
@@ -66,6 +68,11 @@ public class XKPlayerFireAudioCtrl : MonoBehaviour
 		}
 
 		int indexVal = (int)indexPlayer - 1;
+		if (isPlay == AudioRotUp[indexVal].isPlaying) {
+			return;
+		}
+		
+		PlayerAutoFireCom.SetQianGuanTwRotUp(indexPlayer, isPlay);
 		if (isPlay && !AudioRotUp[indexVal].isPlaying) {
 			AudioRotUp[indexVal].Play();
 			IsPlayerRotUp[indexVal] = true;
@@ -83,11 +90,16 @@ public class XKPlayerFireAudioCtrl : MonoBehaviour
 	float[] TimeRotUp = new float[2];
 	void CheckFireRotUpAudio()
 	{
+		PlayerEnum indexPlayer = PlayerEnum.Null;
 		for (int i = 0; i < AudioRotUp.Length; i++) {
 			if (IsPlayerRotUp[i]) {
 				if (Time.time - TimeRotUp[i] >= AudioRotUp[i].clip.length || !AudioRotUp[i].isPlaying) {
 					//转管启动音效结束,开始发射子弹.
 					IsPlayerRotUp[i] = false;
+
+					//关闭转管的起步转动.
+					indexPlayer = (PlayerEnum)(i + 1);
+					PlayerAutoFireCom.SetQianGuanTwRotUp(indexPlayer, false);
 				}
 			}
 		}

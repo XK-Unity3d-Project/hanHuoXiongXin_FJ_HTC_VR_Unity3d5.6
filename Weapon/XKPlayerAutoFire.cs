@@ -78,6 +78,7 @@ PlayerAudio[6] -> 主角飞机/坦克行驶音效.
 		for (int i = 0; i < QianGuanTwRot.Length; i++) {
 			QianGuanTwRot[i].enabled = false;
 			QianGuanTwRotDown[i].enabled = false;
+			QianGuanTwRotUp[i].enabled = false;
 		}
 		FireLayer = XkGameCtrl.GetInstance().PlayerAmmoHitLayer;
 		PlayerScript = GetComponent<XkPlayerCtrl>();
@@ -190,6 +191,26 @@ PlayerAudio[6] -> 主角飞机/坦克行驶音效.
 	GameObject SpawnPlayerAmmo(GameObject ammoPrefab, Vector3 ammoPos, Quaternion ammoRot)
 	{
 		return (GameObject)Instantiate(ammoPrefab, ammoPos, ammoRot);
+	}
+
+	public void SetQianGuanTwRotUp(PlayerEnum indexPlayer, bool isEnable)
+	{
+		if (QianGuanTwRotUp == null || QianGuanTwRotUp.Length < 2) {
+			return;
+		}
+
+		int indexVal = (int)indexPlayer - 1;
+		if (QianGuanTwRotUp[indexVal].enabled != isEnable) {
+			if (isEnable) {
+				QianGuanTwRotDown[indexVal].enabled = false;
+				QianGuanTwRotUp[indexVal].ResetToBeginning();
+				QianGuanTwRotUp[indexVal].enabled = true;
+				QianGuanTwRotUp[indexVal].Play();
+			}
+			else {
+				QianGuanTwRotUp[indexVal].enabled = false;
+			}
+		}
 	}
 
 	void SetQianGuanTwRot(PlayerEnum indexPlayer, bool isEnable, byte key = 0)
