@@ -949,9 +949,9 @@ public class XkGameCtrl : MonoBehaviour {
 
 	public void AddDaoDanNum(PlayerEnum playerSt)
 	{
-		if (IsOpenVR) {
-			return;
-		}
+//		if (IsOpenVR) {
+//			return;
+//		}
 
 		switch(playerSt) {
 		case PlayerEnum.PlayerOne:
@@ -1065,17 +1065,17 @@ public class XkGameCtrl : MonoBehaviour {
 
 	public void SubDaoDanNumPOne()
 	{
-		if (IsOpenVR) {
-			return;
-		}
+//		if (IsOpenVR) {
+//			return;
+//		}
 		DaoDanNumPOne--;
 	}
 	
 	public void SubDaoDanNumPTwo()
 	{
-		if (IsOpenVR) {
-			return;
-		}
+//		if (IsOpenVR) {
+//			return;
+//		}
 		DaoDanNumPTwo--;
 	}
 
