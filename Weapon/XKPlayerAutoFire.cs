@@ -196,6 +196,16 @@ PlayerAudio[6] -> 主角飞机/坦克行驶音效.
         int indexVal = (int)indexPlayer - 1;
         if (QianGuanTwRot[indexVal].enabled != isEnable) {
 			QianGuanTwRot[indexVal].enabled = isEnable;
+			if (!isEnable) {
+				switch (indexPlayer) {
+				case PlayerEnum.PlayerOne:
+					PlayerFireAudioCom.SetFireRotDownAudio(PlayerEnum.PlayerOne, true);
+					break;
+				case PlayerEnum.PlayerTwo:
+					PlayerFireAudioCom.SetFireRotDownAudio(PlayerEnum.PlayerTwo, true);
+					break;
+				}
+			}
 		}
 
 		#if USE_LOOP_FIRE_AUDIO
@@ -1061,6 +1071,7 @@ PlayerAudio[6] -> 主角飞机/坦克行驶音效.
 			if (!PlayerAudio[0].isPlaying) {
 				PlayerAudio[0].Play();
 				PlayerFireAudioCom.SetFireRotAudio(PlayerEnum.PlayerOne, true);
+				PlayerFireAudioCom.SetFireRotDownAudio(PlayerEnum.PlayerOne, false);
 			}
 
 			if (PlayerAudio[1].isPlaying) {
@@ -1078,6 +1089,7 @@ PlayerAudio[6] -> 主角飞机/坦克行驶音效.
 			if (!PlayerAudio[1].isPlaying) {
 				PlayerAudio[1].Play();
 				PlayerFireAudioCom.SetFireRotAudio(PlayerEnum.PlayerOne, true);
+				PlayerFireAudioCom.SetFireRotDownAudio(PlayerEnum.PlayerOne, false);
 			}
 
 			if (PlayerAudio[0].isPlaying) {
@@ -1112,6 +1124,7 @@ PlayerAudio[6] -> 主角飞机/坦克行驶音效.
 			if (!PlayerAudio[3].isPlaying) {
 				PlayerAudio[3].Play();
 				PlayerFireAudioCom.SetFireRotAudio(PlayerEnum.PlayerTwo, true);
+				PlayerFireAudioCom.SetFireRotDownAudio(PlayerEnum.PlayerTwo, false);
 			}
 
 			if (PlayerAudio[4].isPlaying) {
@@ -1129,6 +1142,7 @@ PlayerAudio[6] -> 主角飞机/坦克行驶音效.
 			if (!PlayerAudio[4].isPlaying) {
 				PlayerAudio[4].Play();
 				PlayerFireAudioCom.SetFireRotAudio(PlayerEnum.PlayerTwo, true);
+				PlayerFireAudioCom.SetFireRotDownAudio(PlayerEnum.PlayerTwo, false);
 			}
 
 			if (PlayerAudio[3].isPlaying) {

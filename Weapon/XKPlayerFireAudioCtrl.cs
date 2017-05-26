@@ -35,4 +35,16 @@ public class XKPlayerFireAudioCtrl : MonoBehaviour
 			AudioRot[indexVal].Stop();
 		}
 	}
+
+	public void SetFireRotDownAudio(PlayerEnum indexPlayer, bool isPlay)
+	{
+		int indexVal = (int)indexPlayer - 1;
+		if (isPlay && !AudioRotDown[indexVal].isPlaying) {
+			AudioRotDown[indexVal].Play();
+		}
+
+		if (!isPlay && AudioRotDown[indexVal].isPlaying) {
+			AudioRotDown[indexVal].Stop();
+		}
+	}
 }
