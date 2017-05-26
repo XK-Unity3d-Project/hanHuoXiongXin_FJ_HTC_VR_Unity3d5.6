@@ -105,6 +105,10 @@ public class XKPlayerCamera : MonoBehaviour {
 		if (PlayerScript != null) {
 			PlayerScript.SetPlayerCamera(this);
 		}
+
+		if (PlayerSt != PlayerTypeEnum.CartoonCamera) {
+			XkGameCtrl.GetInstance().ChangeAudioListParent();
+		}
 		
 		GameObject obj = new GameObject();
 		obj.name = "CameraParent";

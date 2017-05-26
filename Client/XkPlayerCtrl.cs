@@ -121,9 +121,9 @@ PlayerAudio[6] -> 主角飞机/坦克行驶音效.
 			break;
 		}
 
-		if (PlayerSt != PlayerTypeEnum.CartoonCamera) {
-			XkGameCtrl.GetInstance().ChangeAudioListParent();
-		}
+//		if (PlayerSt != PlayerTypeEnum.CartoonCamera) {
+//			XkGameCtrl.GetInstance().ChangeAudioListParent();
+//		}
 		PlayerObj = gameObject;
 		PlayerTran = transform;
 		AimSpawnPoint = new List<XKSpawnNpcPoint>();
