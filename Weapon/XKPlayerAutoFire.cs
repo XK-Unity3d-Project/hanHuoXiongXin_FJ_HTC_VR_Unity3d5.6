@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿#define USE_LOOP_FIRE_AUDIO
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -82,7 +83,18 @@ PlayerAudio[6] -> 主角飞机/坦克行驶音效.
 			PlayerAudio = PlayerScript.PlayerAudio;
 			for (int i = 0; i < 7; i++) {
 				if (i < 6) {
+					#if USE_LOOP_FIRE_AUDIO
+					if (i == 2 || i == 5) {
+						//导弹子弹发射用肺循环处理.
+						PlayerAudio[i].loop = false;
+					}
+					else {
+						//普通子弹和高爆弹发射音效用循环的.
+						PlayerAudio[i].loop = true;
+					}
+					#else
 					PlayerAudio[i].loop = false;
+					#endif
 				}
 				else {
 					PlayerAudio[i].loop = true;
@@ -183,6 +195,31 @@ PlayerAudio[6] -> 主角飞机/坦克行驶音效.
         if (QianGuanTwRot[indexVal].enabled != isEnable) {
 			QianGuanTwRot[indexVal].enabled = isEnable;
 		}
+
+		#if USE_LOOP_FIRE_AUDIO
+		if (!isEnable) {
+			switch (indexPlayer) {
+			case PlayerEnum.PlayerOne:
+				if (PlayerAudio[0].isPlaying) {
+					PlayerAudio[0].Stop();
+				}
+
+				if (PlayerAudio[1].isPlaying) {
+					PlayerAudio[1].Stop();
+				}
+				break;
+			case PlayerEnum.PlayerTwo:
+				if (PlayerAudio[3].isPlaying) {
+					PlayerAudio[3].Stop();
+				}
+
+				if (PlayerAudio[4].isPlaying) {
+					PlayerAudio[4].Stop();
+				}
+				break;
+			}
+		}
+		#endif
 	}
 
 	GameObject[] AmmoParticleObj = new GameObject[2];
@@ -1016,16 +1053,28 @@ PlayerAudio[6] -> 主角飞机/坦克行驶音效.
 		}
 
 		if (XkGameCtrl.GaoBaoDanNumPOne <= 0) {
+			#if USE_LOOP_FIRE_AUDIO
+			if (!PlayerAudio[0].isPlaying) {
+				PlayerAudio[0].Play();
+			}
+			#else
 			if (PlayerAudio[0].isPlaying) {
 				PlayerAudio[0].Stop();
 			}
 			PlayerAudio[0].Play();
+			#endif
 		}
 		else {
+			#if USE_LOOP_FIRE_AUDIO
+			if (!PlayerAudio[1].isPlaying) {
+				PlayerAudio[1].Play();
+			}
+			#else
 			if (PlayerAudio[1].isPlaying) {
 				PlayerAudio[1].Stop();
 			}
 			PlayerAudio[1].Play();
+			#endif
 		}
 	}
 	
@@ -1045,16 +1094,28 @@ PlayerAudio[6] -> 主角飞机/坦克行驶音效.
 		}
 
 		if (XkGameCtrl.GaoBaoDanNumPTwo <= 0) {
+			#if USE_LOOP_FIRE_AUDIO
+			if (!PlayerAudio[3].isPlaying) {
+				PlayerAudio[3].Play();
+			}
+			#else
 			if (PlayerAudio[3].isPlaying) {
 				PlayerAudio[3].Stop();
 			}
 			PlayerAudio[3].Play();
+			#endif
 		}
 		else {
+			#if USE_LOOP_FIRE_AUDIO
+			if (!PlayerAudio[4].isPlaying) {
+				PlayerAudio[4].Play();
+			}
+			#else
 			if (PlayerAudio[4].isPlaying) {
 				PlayerAudio[4].Stop();
 			}
 			PlayerAudio[4].Play();
+			#endif
 		}
 	}
 
