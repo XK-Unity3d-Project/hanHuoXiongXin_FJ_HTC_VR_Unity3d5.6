@@ -192,14 +192,19 @@ PlayerAudio[6] -> 主角飞机/坦克行驶音效.
 		return (GameObject)Instantiate(ammoPrefab, ammoPos, ammoRot);
 	}
 
-	void SetQianGuanTwRot(PlayerEnum indexPlayer, bool isEnable)
+	void SetQianGuanTwRot(PlayerEnum indexPlayer, bool isEnable, byte key = 0)
     {
         if (QianGuanTwRot == null || QianGuanTwRot.Length < 2) {
             return;
         }
 
+		if (key != 0) {
+			//强制打开机枪转管逐渐停止的逻辑.
+			isEnable = false;
+		}
+
         int indexVal = (int)indexPlayer - 1;
-        if (QianGuanTwRot[indexVal].enabled != isEnable) {
+		if (QianGuanTwRot[indexVal].enabled != isEnable || key != 0) {
 			QianGuanTwRot[indexVal].enabled = isEnable;
 			if (!isEnable) {
 				PlayerFireAudioCom.SetFireRotDownAudio(indexPlayer, true);
@@ -804,6 +809,9 @@ PlayerAudio[6] -> 主角飞机/坦克行驶音效.
 		}
 		else {
 			IsActiveFireBtOne = false;
+			if (XkGameCtrl.IsActivePlayerOne) {
+				SetQianGuanTwRot(PlayerEnum.PlayerOne, false, 1);
+			}
 		}
 		PlayerFireAudioCom.SetFireRotUpAudio(PlayerEnum.PlayerOne, IsActiveFireBtOne);
 	}
@@ -816,6 +824,9 @@ PlayerAudio[6] -> 主角飞机/坦克行驶音效.
 		}
 		else {
 			IsActiveFireBtTwo = false;
+			if (XkGameCtrl.IsActivePlayerTwo) {
+				SetQianGuanTwRot(PlayerEnum.PlayerTwo, false, 1);
+			}
 		}
 		PlayerFireAudioCom.SetFireRotUpAudio(PlayerEnum.PlayerTwo, IsActiveFireBtTwo);
 	}
