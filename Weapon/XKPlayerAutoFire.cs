@@ -587,10 +587,10 @@ PlayerAudio[6] -> 主角飞机/坦克行驶音效.
 				                         firePos);
 			}
 			else if (particleType == 1) {
-				if (PlayerAudio[2].isPlaying) {
-					PlayerAudio[2].Stop();
-				}
-				PlayerAudio[2].Play();
+//				if (PlayerAudio[2].isPlaying) {
+//					PlayerAudio[2].Stop();
+//				}
+//				PlayerAudio[2].Play();
 
 				if (DaoDanAmmoParticle[ammoSpawnIndex] != null) {
 					obj = (GameObject)Instantiate(DaoDanAmmoParticle[ammoSpawnIndex], DaoDanAmmoPosOne[ammoSpawnIndex].position,
@@ -641,10 +641,10 @@ PlayerAudio[6] -> 主角飞机/坦克行驶音效.
 				                         firePos);
 			}
 			else if (particleType == 1) {
-				if (PlayerAudio[5].isPlaying) {
-					PlayerAudio[5].Stop();
-				}
-				PlayerAudio[5].Play();
+//				if (PlayerAudio[5].isPlaying) {
+//					PlayerAudio[5].Stop();
+//				}
+//				PlayerAudio[5].Play();
 
 				if (DaoDanAmmoParticle[ammoSpawnIndex] != null) {
 					obj = (GameObject)Instantiate(DaoDanAmmoParticle[ammoSpawnIndex], DaoDanAmmoPosTwo[ammoSpawnIndex].position,
