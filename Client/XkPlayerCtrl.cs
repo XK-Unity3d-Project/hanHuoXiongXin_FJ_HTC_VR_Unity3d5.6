@@ -139,6 +139,7 @@ PlayerAudio[6] -> 主角飞机/坦克行驶音效.
 		if (PlayerSt != PlayerTypeEnum.FeiJi) {
 			return;
 		}
+		OpenPlayerMoveAudio();
 
 		if (IsHandleRpc) {
 			if (XkGameCtrl.GameModeVal == GameMode.LianJi) {
