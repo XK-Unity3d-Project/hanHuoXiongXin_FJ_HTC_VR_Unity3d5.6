@@ -71,9 +71,12 @@ public class XKPlayerFireAudioCtrl : MonoBehaviour
 		if (isPlay == AudioRotUp[indexVal].isPlaying) {
 			return;
 		}
-		
-		PlayerAutoFireCom.SetQianGuanTwRotUp(indexPlayer, isPlay);
+
 		if (isPlay && !AudioRotUp[indexVal].isPlaying) {
+			if (Time.time - TimeRotUp[indexVal] <= AudioRotUp[indexVal].clip.length * 0.5f) {
+				//当玩家持续点击发射按键的间隔时间小于一定值时,跳过转管启动程序,直接进入发射子弹状态!
+				return;
+			}
 			AudioRotUp[indexVal].Play();
 			IsPlayerRotUp[indexVal] = true;
 			TimeRotUp[indexVal] = Time.time;
@@ -84,6 +87,7 @@ public class XKPlayerFireAudioCtrl : MonoBehaviour
 			IsPlayerRotUp[indexVal] = false;
 			//结束转管启动音效,但是不发射子弹.
 		}
+		PlayerAutoFireCom.SetQianGuanTwRotUp(indexPlayer, isPlay);
 	}
 
 	public static bool[] IsPlayerRotUp = new bool[2];
