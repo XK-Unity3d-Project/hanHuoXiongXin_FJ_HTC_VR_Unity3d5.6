@@ -47,4 +47,16 @@ public class XKPlayerFireAudioCtrl : MonoBehaviour
 			AudioRotDown[indexVal].Stop();
 		}
 	}
+
+	public void SetFireRotUpAudio(PlayerEnum indexPlayer, bool isPlay)
+	{
+		int indexVal = (int)indexPlayer - 1;
+		if (isPlay && !AudioRotUp[indexVal].isPlaying) {
+			AudioRotUp[indexVal].Play();
+		}
+
+		if (!isPlay && AudioRotUp[indexVal].isPlaying) {
+			AudioRotUp[indexVal].Stop();
+		}
+	}
 }

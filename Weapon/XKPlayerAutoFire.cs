@@ -14,6 +14,10 @@ public enum PlayerAmmoType
 public class XKPlayerAutoFire : MonoBehaviour {
 	
 	public LayerMask FireLayer;
+	//当玩家开火时,使枪管逐渐加快转动.
+	public TweenRotation[] QianGuanTwRotUp;
+	//当玩家停止开火时,使枪管慢慢停止转动.
+	public TweenRotation[] QianGuanTwRotDown;
 	public TweenRotation[] QianGuanTwRot;
 	public Transform[] AmmoStartPosOne;
 	public Transform[] AmmoStartPosTwo;
@@ -73,6 +77,7 @@ PlayerAudio[6] -> 主角飞机/坦克行驶音效.
 		//AmmoParticleList = new List<AmmoParticleDt>(6);
 		for (int i = 0; i < QianGuanTwRot.Length; i++) {
 			QianGuanTwRot[i].enabled = false;
+			QianGuanTwRotDown[i].enabled = false;
 		}
 		FireLayer = XkGameCtrl.GetInstance().PlayerAmmoHitLayer;
 		PlayerScript = GetComponent<XkPlayerCtrl>();
@@ -197,14 +202,14 @@ PlayerAudio[6] -> 主角飞机/坦克行驶音效.
         if (QianGuanTwRot[indexVal].enabled != isEnable) {
 			QianGuanTwRot[indexVal].enabled = isEnable;
 			if (!isEnable) {
-				switch (indexPlayer) {
-				case PlayerEnum.PlayerOne:
-					PlayerFireAudioCom.SetFireRotDownAudio(PlayerEnum.PlayerOne, true);
-					break;
-				case PlayerEnum.PlayerTwo:
-					PlayerFireAudioCom.SetFireRotDownAudio(PlayerEnum.PlayerTwo, true);
-					break;
-				}
+				PlayerFireAudioCom.SetFireRotDownAudio(indexPlayer, true);
+
+				QianGuanTwRotDown[indexVal].ResetToBeginning();
+				QianGuanTwRotDown[indexVal].enabled = true;
+				QianGuanTwRotDown[indexVal].Play();
+			}
+			else {
+				QianGuanTwRotDown[indexVal].enabled = false;
 			}
 		}
 
@@ -219,7 +224,6 @@ PlayerAudio[6] -> 主角飞机/坦克行驶音效.
 				if (PlayerAudio[1].isPlaying) {
 					PlayerAudio[1].Stop();
 				}
-				PlayerFireAudioCom.SetFireRotAudio(PlayerEnum.PlayerOne, false);
 				break;
 			case PlayerEnum.PlayerTwo:
 				if (PlayerAudio[3].isPlaying) {
@@ -229,9 +233,9 @@ PlayerAudio[6] -> 主角飞机/坦克行驶音效.
 				if (PlayerAudio[4].isPlaying) {
 					PlayerAudio[4].Stop();
 				}
-				PlayerFireAudioCom.SetFireRotAudio(PlayerEnum.PlayerTwo, false);
 				break;
 			}
+			PlayerFireAudioCom.SetFireRotAudio(indexPlayer, false);
 		}
 		#endif
 	}
