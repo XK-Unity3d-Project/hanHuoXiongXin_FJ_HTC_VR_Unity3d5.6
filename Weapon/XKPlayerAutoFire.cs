@@ -243,6 +243,10 @@ PlayerAudio[6] -> 主角飞机/坦克行驶音效.
 	GameObject[] AmmoParticleObj = new GameObject[2];
 	void CheckPlayerOneFireBt()
 	{
+		if (XKPlayerFireAudioCtrl.IsPlayerRotUp[0]) {
+			return;	
+		}
+
 		if (XKPlayerCamera.IndexPlayerNum != 0) {
 			return;
 		}
@@ -397,6 +401,10 @@ PlayerAudio[6] -> 主角飞机/坦克行驶音效.
 
 	void CheckPlayerTwoFireBt()
 	{
+		if (XKPlayerFireAudioCtrl.IsPlayerRotUp[1]) {
+			return;	
+		}
+
 		if (XKPlayerCamera.IndexPlayerNum != 1) {
 			SetQianGuanTwRot(PlayerEnum.PlayerTwo, false);
 			return;
@@ -797,6 +805,7 @@ PlayerAudio[6] -> 主角飞机/坦克行驶音效.
 		else {
 			IsActiveFireBtOne = false;
 		}
+		PlayerFireAudioCom.SetFireRotUpAudio(PlayerEnum.PlayerOne, IsActiveFireBtOne);
 	}
 
 	void ClickFireBtTwoEvent(ButtonState state)
@@ -808,6 +817,7 @@ PlayerAudio[6] -> 主角飞机/坦克行驶音效.
 		else {
 			IsActiveFireBtTwo = false;
 		}
+		PlayerFireAudioCom.SetFireRotUpAudio(PlayerEnum.PlayerTwo, IsActiveFireBtTwo);
 	}
 
 	void ClickDaoDanBtOneEvent(ButtonState state)

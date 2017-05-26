@@ -21,7 +21,7 @@ public class XKPlayerFireAudioCtrl : MonoBehaviour
 	// Update is called once per frame
 	void FixedUpdate()
 	{
-		
+		CheckFireRotUpAudio();
 	}
 
 	public void SetFireRotAudio(PlayerEnum indexPlayer, bool isPlay)
@@ -50,13 +50,46 @@ public class XKPlayerFireAudioCtrl : MonoBehaviour
 
 	public void SetFireRotUpAudio(PlayerEnum indexPlayer, bool isPlay)
 	{
+		if (isPlay) {
+			switch (indexPlayer) {
+			case PlayerEnum.PlayerOne:
+				if (!XkGameCtrl.IsActivePlayerOne) {
+					return;
+				}
+				break;
+			case PlayerEnum.PlayerTwo:
+				if (!XkGameCtrl.IsActivePlayerTwo) {
+					return;
+				}
+				break;
+			}
+		}
+
 		int indexVal = (int)indexPlayer - 1;
 		if (isPlay && !AudioRotUp[indexVal].isPlaying) {
 			AudioRotUp[indexVal].Play();
+			IsPlayerRotUp[indexVal] = true;
+			TimeRotUp[indexVal] = Time.time;
 		}
 
 		if (!isPlay && AudioRotUp[indexVal].isPlaying) {
 			AudioRotUp[indexVal].Stop();
+			IsPlayerRotUp[indexVal] = false;
+			//结束转管启动音效,但是不发射子弹.
+		}
+	}
+
+	public static bool[] IsPlayerRotUp = new bool[2];
+	float[] TimeRotUp = new float[2];
+	void CheckFireRotUpAudio()
+	{
+		for (int i = 0; i < AudioRotUp.Length; i++) {
+			if (IsPlayerRotUp[i]) {
+				if (Time.time - TimeRotUp[i] >= AudioRotUp[i].clip.length || !AudioRotUp[i].isPlaying) {
+					//转管启动音效结束,开始发射子弹.
+					IsPlayerRotUp[i] = false;
+				}
+			}
 		}
 	}
 }
