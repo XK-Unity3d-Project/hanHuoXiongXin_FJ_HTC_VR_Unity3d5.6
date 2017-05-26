@@ -65,9 +65,11 @@ PlayerAudio[6] -> 主角飞机/坦克行驶音效.
 	float TimeAimPlayerPOne;
 	float TimeAimPlayerPTwo;
 	PlayerTypeEnum PlayerStEnum;
+	XKPlayerFireAudioCtrl PlayerFireAudioCom;
 	// Use this for initialization
 	void Start()
 	{
+		PlayerFireAudioCom = GetComponent<XKPlayerFireAudioCtrl>();
 		//AmmoParticleList = new List<AmmoParticleDt>(6);
 		for (int i = 0; i < QianGuanTwRot.Length; i++) {
 			QianGuanTwRot[i].enabled = false;
@@ -207,6 +209,7 @@ PlayerAudio[6] -> 主角飞机/坦克行驶音效.
 				if (PlayerAudio[1].isPlaying) {
 					PlayerAudio[1].Stop();
 				}
+				PlayerFireAudioCom.SetFireRotAudio(PlayerEnum.PlayerOne, false);
 				break;
 			case PlayerEnum.PlayerTwo:
 				if (PlayerAudio[3].isPlaying) {
@@ -216,6 +219,7 @@ PlayerAudio[6] -> 主角飞机/坦克行驶音效.
 				if (PlayerAudio[4].isPlaying) {
 					PlayerAudio[4].Stop();
 				}
+				PlayerFireAudioCom.SetFireRotAudio(PlayerEnum.PlayerTwo, false);
 				break;
 			}
 		}
@@ -1056,6 +1060,11 @@ PlayerAudio[6] -> 主角飞机/坦克行驶音效.
 			#if USE_LOOP_FIRE_AUDIO
 			if (!PlayerAudio[0].isPlaying) {
 				PlayerAudio[0].Play();
+				PlayerFireAudioCom.SetFireRotAudio(PlayerEnum.PlayerOne, true);
+			}
+
+			if (PlayerAudio[1].isPlaying) {
+				PlayerAudio[1].Stop();
 			}
 			#else
 			if (PlayerAudio[0].isPlaying) {
@@ -1068,6 +1077,11 @@ PlayerAudio[6] -> 主角飞机/坦克行驶音效.
 			#if USE_LOOP_FIRE_AUDIO
 			if (!PlayerAudio[1].isPlaying) {
 				PlayerAudio[1].Play();
+				PlayerFireAudioCom.SetFireRotAudio(PlayerEnum.PlayerOne, true);
+			}
+
+			if (PlayerAudio[0].isPlaying) {
+				PlayerAudio[0].Stop();
 			}
 			#else
 			if (PlayerAudio[1].isPlaying) {
@@ -1097,6 +1111,11 @@ PlayerAudio[6] -> 主角飞机/坦克行驶音效.
 			#if USE_LOOP_FIRE_AUDIO
 			if (!PlayerAudio[3].isPlaying) {
 				PlayerAudio[3].Play();
+				PlayerFireAudioCom.SetFireRotAudio(PlayerEnum.PlayerTwo, true);
+			}
+
+			if (PlayerAudio[4].isPlaying) {
+				PlayerAudio[4].Stop();
 			}
 			#else
 			if (PlayerAudio[3].isPlaying) {
@@ -1109,6 +1128,11 @@ PlayerAudio[6] -> 主角飞机/坦克行驶音效.
 			#if USE_LOOP_FIRE_AUDIO
 			if (!PlayerAudio[4].isPlaying) {
 				PlayerAudio[4].Play();
+				PlayerFireAudioCom.SetFireRotAudio(PlayerEnum.PlayerTwo, true);
+			}
+
+			if (PlayerAudio[3].isPlaying) {
+				PlayerAudio[3].Stop();
 			}
 			#else
 			if (PlayerAudio[4].isPlaying) {
