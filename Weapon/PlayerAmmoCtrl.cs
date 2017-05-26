@@ -28,8 +28,10 @@ public class PlayerAmmoCtrl : MonoBehaviour {
 	bool IsDonotHurtNpc;
 	TrailRenderer TrailScript;
 	float TrailTime = 3f;
+	XKAmmoHiddenCtrl AmmoHiddenCom;
 	void Awake()
 	{
+		AmmoHiddenCom = GetComponent<XKAmmoHiddenCtrl>();
 		if (TrailScript == null) {
 			TrailScript = GetComponentInChildren<TrailRenderer>();
 			if (TrailScript != null) {
@@ -319,7 +321,13 @@ public class PlayerAmmoCtrl : MonoBehaviour {
 			}
 		}
 		else {
-			Destroy(ObjAmmo, 0.1f);
+			if (AmmoHiddenCom == null) {
+				Destroy(ObjAmmo, 0.1f);
+			}
+			else {
+				AmmoHiddenCom.HiddenAmmoObj();
+				Destroy (ObjAmmo, AmmoHiddenCom.TimeHidden);
+			}
 		}
 	}
 
